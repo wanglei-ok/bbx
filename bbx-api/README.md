@@ -337,7 +337,7 @@
 /* POST /v1/login/resetPassword
 {
 	"mobile": "1339992222",
-	"password" "123456",
+	"password": "123456",
 	"rePassword": "123456",
 	"sms": "1111"
 }
@@ -585,27 +585,27 @@
 | phrase   | true     | number   | 当前期数                                                     |          |
 | pool     | true     | number   | 当前奖池金额                                                 |          |
 | price    | true     | number   | 每注单价                                                     |          |
-| list     | true     | array    | 当前下注统计。当请求参数type=1时，依次表示数字、字母的下注金额；当type=2时，依次表示下注0-f的下注金额；type=3，依次表示下注0、1、2、3、4、5的下注金额，number类型 |          |
+| item     | true     | object    | 当前下注统计。当请求参数type=1时，依次表示数字、字母的下注金额；当type=2时，依次表示下注0-f的下注金额；type=3，依次表示下注0、1、2、3、4、5的下注金额，number类型 |          |
 
 请求响应数据：
 
 ```json
 /* GET /v1/bet/currentPhraseDetail?type=1 */
 {
-    "status": "ok",
-    "data": {
-        "phrase": 29,
-   		"pool": 3333.221,
-    	"price": 11,
-    	"list": [
-     		"0": 33,
-        	"1": 44.33,
-        	"2": 55,
-        	"3": 66,
-        	"4": 77,
-        	"5": 88
-    ]    
-    }    
+	"status": "ok",
+	"data": {
+		"phrase": 29,
+		"pool": 3333.221,
+		"price": 11,
+		"item": {
+			"0": 33,
+			"1": 44.33,
+			"2": 55,
+			"3": 66,
+			"4": 77,
+			"5": 88
+		}
+	}
 }
 
 /* GET /v1/bet/currentPhraseDetail?type=1 */
