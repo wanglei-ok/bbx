@@ -23,7 +23,7 @@
 	- [二维空间奖池](#二维空间奖池) 
 	- [三维空间奖池](#三维空间奖池) 
 	- [四维空间奖池](#四维空间奖池) 
-	- [个人可用余额](#个人可用余额) 
+	- [个人可用余额(**AccessToken API** )](#个人可用余额) 
 - [在线客服](#在线客服) 	
 
 
@@ -41,6 +41,8 @@ ws://api.bbx.com/wshandler (后期可能修改)
 | :--------- | :-------- | :------ | :---------- | :------ | :---------------------- |
 | sub | true | string | 订阅消息，topic格式 | | |
 | id | true | string | 客户端生成的id,用于匹配异步请求应答 |  |  |
+| token | false | string | 登录后才能访问的topic,订阅时需要提交access token |  |  |
+
 ```json
 {
 	"sub": "topic to sub",
@@ -142,7 +144,7 @@ ws://api.bbx.com/wshandler (后期可能修改)
 |二维空间奖池|bbx.current.two|推送二维空间，当前奖池奖金，每个投注项的注数，当前参与人次|
 |三维空间奖池|bbx.current.three|推送三维空间，当前奖池奖金，每个投注项的注数，当前参与人次|
 |四维空间奖池|bbx.current.four|推送四维空间，当前奖池奖金，当前投注数，当前参与人次|
-|个人可用余额|bbx.personal.balance|个人可用余额变动时，推动可用余额|
+|个人可用余额|bbx.personal.balance|**AccessToken API**个人可用余额变动时，推动可用余额|
 ```json
 # Request
 {
@@ -730,19 +732,22 @@ ws://api.bbx.com/wshandler (后期可能修改)
 ```
 
 ## 个人可用余额
+**AccessToken API**
 **bbx.personal.balance**
 
-个人可用余额变动时，推动可用余额
+个人可用余额变动时，推动可用余额，请求订阅时需要携带token参数
 
 | 参数名称         | 是否必须 | 数据类型 | 描述                                           | 取值范围       |
 | :--------------- | :------- | :------- | :--------------------------------------------- | :------------- |
 | data   | true      | number   | 可用余额 | |
 
 ```json
+# succ
 # Request
 {
 	"sub": "bbx.personal.balance",
 	"id": "id1"
+	"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
 }
 
 # Response
@@ -759,6 +764,24 @@ ws://api.bbx.com/wshandler (后期可能修改)
 	"ts": "1543819612",
 	"data": 2126
 }
+
+# error
+# Request
+{
+	"sub": "bbx.personal.balance",
+	"id": "id2"
+}
+
+# Error Response
+{
+	"status": "error",
+	"id": "id2",
+	"ts": 1543819612,
+	"err-code": "bad-request",
+	"err-msg": "No access."
+}
+
+
 ```
 
 ## 在线客服	
